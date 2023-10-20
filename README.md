@@ -46,6 +46,8 @@ Dependiendo de la posición del interruptor, el display debe mostrar o bien el c
 #define NEGATIVO 6
 
 #define SENSOR A0
+
+#define FOTODIODO A1
 ```
 
 #### Void setup
@@ -70,6 +72,8 @@ void setup()
   pinMode(6, OUTPUT);
   
   pinMode(SENSOR, INPUT);
+  
+  pinMode(FOTODIODO, INPUT);
   // Apagago los displays al inicio
   digitalWrite(UNIDAD, LOW);
   digitalWrite(DECENA, LOW);
@@ -80,6 +84,7 @@ void setup()
 }
 
 
+
 int contadorDigital = 0; //almacena el valor actual del contador de numeros
 int SW_antes = 1; // estado anterior del interruptor
 bool mostrarPrimos = false; // alterna entre num primos
@@ -87,6 +92,8 @@ int PulsadorSubeAntes = 1;
 int PulsadorBajaAntes = 1;
 
 float lecturaSensor = 0;
+
+int lecturaFotodiodo = 0;
 ```
 
 #### Void loop
@@ -97,10 +104,15 @@ numeros primos y operar con los botones
 */
 void loop()
 {
+  
+  //parte 3
+  lecturaFotodiodo = map(analogRead(FOTODIODO),0,1023,0,1023);
+  Serial.println(lecturaFotodiodo);
+  
   //funcion map para leer los valores del sensor
   lecturaSensor= map(analogRead(SENSOR),0,1023,-50,450);
   Serial.println(lecturaSensor);
-  
+   
   
  int SW_ahora = digitalRead(SW);
   
@@ -127,7 +139,8 @@ void loop()
             contadorDigital++;
             if (contadorDigital > 99) 
             {
-                contadorDigital = 0;   
+                contadorDigital = 0;
+                
             }
           digitalWrite(6, 1); // si sube motor gira en un sentido
           digitalWrite(5, 0);
@@ -146,6 +159,7 @@ void loop()
     }
   delay(25);
 }
+
 ```
 
 #### Función mostrar números primos
@@ -359,7 +373,7 @@ bool esPrimo(int numero)
 
 
 ## **Link al proyecto**
-[Proyecto en tinkercad](https://www.tinkercad.com/things/0Wt6JzUxBMP-copy-of-copy-of-parcial-1-borrador/editel?sharecode=5LjgxSROw1uT5xxDbbGF1KB4Bn0fdWXFns52MOa6mmU "Proyecto en tinkercad")
+https://www.tinkercad.com/things/9gbVykNGm6f-copy-of-copy-of-parcial-1-terminado/editel?sharecode=UDVj4o5jwJv-4ytNtg7GfIy15ihf7Ls_Xk2ghx3k5BY
 
 
 ------------
